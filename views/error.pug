@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1= message
+  h2= error.status
+  h3= "this is error from express error handler"
+  pre #{error.stack}

@@ -6,7 +6,7 @@ const dv = require('../app/config.js');
 // 'bd5hs.mongodb.net:27017,cluster0-shard-00-02.bd5hs.mongodb.net:27017/cluster0?ssl=true&' +
 // 'replicaSet=atlas-10erh7-shard-0&authSource=admin&retryWrites=true&w=majority';
 
-const pass = process.env.ATLAS_PASSWORD
+const pass = process.env.ATLAS_PASSWORD || '123'
 const onlineDB = 'eduwork-1'
 const connAtlas2 = `mongodb://faiz1:${pass}@cluster0-shard-00-00.bd5hs.mongodb.net:` +
   '27017,cluster0-shard-00-01.bd5hs.mongodb.net:27017,cluster0-shard-00-02.bd5hs.mongodb.net:27017' +

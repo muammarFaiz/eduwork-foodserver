@@ -1,4 +1,6 @@
-require('dotenv').config();
+// require('dotenv').config();
+
+// process.env.ACCESS_TOKEN_SECRET
 
 // unecessary steps?:
 const path = require('path');
@@ -14,5 +16,3 @@ module.exports = {
   dbName: process.env.DB_NAME,
   all: process.env
 };
-
-// module.exports = process.env;

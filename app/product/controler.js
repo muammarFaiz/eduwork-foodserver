@@ -98,7 +98,7 @@ const testFind = async (req, res, next) => {
     tagArr = await tagModel.find({name: {$in: req.query.tag}})
     console.log(tagArr);
     if(tagArr.length === 0 && categoryArr.length === 0) {
-      console.log('else is running');
+      console.log('tag and category zero...');
       const result = await Product.find()
         .populate('category tag', 'name-_id')
         .skip(Number(skip))
@@ -108,12 +108,15 @@ const testFind = async (req, res, next) => {
     } else {
       let filter = {}
       if(categoryArr.length !== 0) {
+        console.log('category not zero');
         const categoryIdArr = categoryArr.map(obj => obj._id)
         filter.category = {$in: categoryIdArr}
       } if(tagArr.length !== 0) {
+        console.log('tag not zero');
         const tagIdArr = tagArr.map(obj => obj._id)
         filter.tag = {$all: tagIdArr}
       } if(req.query.searchbar) {
+        console.log('serachbar not zero');
         filter.productName = RegExp(req.query.searchbar, 'i')
         // console.log(req.query.searchbar);
       }

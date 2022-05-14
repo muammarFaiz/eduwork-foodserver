@@ -97,39 +97,28 @@ const testFind = async (req, res, next) => {
     console.log(categoryArr);
     tagArr = await tagModel.find({name: {$in: req.query.tag}})
     console.log(tagArr);
-    if(tagArr.length === 0 && categoryArr.length === 0) {
-      console.log('tag and category zero...');
-      const result = await Product.find()
-        .populate('category tag', 'name-_id')
-        .skip(Number(skip))
-        .limit(Number(limit))
-      const total = await Product.count()
-      res.json({status: 'success', total: total, result: result});
-    } else {
-      let filter = {}
-      if(categoryArr.length !== 0) {
-        console.log('category not zero');
-        const categoryIdArr = categoryArr.map(obj => obj._id)
-        filter.category = {$in: categoryIdArr}
-      } if(tagArr.length !== 0) {
-        console.log('tag not zero');
-        const tagIdArr = tagArr.map(obj => obj._id)
-        filter.tag = {$all: tagIdArr}
-      } if(req.query.searchbar) {
-        console.log('serachbar not zero');
-        filter.productName = RegExp(req.query.searchbar, 'i')
-        // console.log(req.query.searchbar);
-      }
-      console.log(filter);
-      const result = await Product.find(filter)
-        .populate('category tag', 'name-_id')
-        .skip(Number(skip))
-        .limit(Number(limit))
-      const total = await Product.count(filter)
-      res.json({ status: 'success', total: total, result: result });
-      // console.log(tofind);
-      // res.json(tofind)
+
+    let filter = {}
+    if(categoryArr.length !== 0) {
+      console.log('category not zero');
+      const categoryIdArr = categoryArr.map(obj => obj._id)
+      filter.category = {$in: categoryIdArr}
+    } if(tagArr.length !== 0) {
+      console.log('tag not zero');
+      const tagIdArr = tagArr.map(obj => obj._id)
+      filter.tag = {$all: tagIdArr}
+    } if(req.query.searchbar) {
+      console.log('serachbar not zero');
+      filter.productName = RegExp(req.query.searchbar, 'i')
+      // console.log(req.query.searchbar);
     }
+    console.log(filter);
+    const result = await Product.find(filter)
+      .populate('category tag', 'name-_id')
+      .skip(Number(skip))
+      .limit(Number(limit))
+    const total = await Product.count(filter)
+    res.json({ status: 'success', total: total, result: result });
   } catch(e) {
     console.log(e);
     next(e);
